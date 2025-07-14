@@ -5,10 +5,12 @@ const {
 } = require('../services/firebase.service');
 
 async function addUser(req, res) {
-    await addOneUser(req.body.user);
+    console.log('Adding user:', req.body);
+    await addOneUser(req.body);
 }
 
 async function getUsers(req, res) {
+    console.log('Fetching all users');
     res.json(await getAllUsers());
 }
 
