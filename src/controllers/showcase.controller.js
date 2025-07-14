@@ -2,16 +2,19 @@ const {
     addOneUser,
     getAllUsers,
     deleteUsers,
+    getAnalytics,
 } = require('../services/firebase.service');
 
 async function addUser(req, res) {
-    console.log('Adding user:', req.body);
     await addOneUser(req.body);
 }
 
 async function getUsers(req, res) {
-    console.log('Fetching all users');
     res.json(await getAllUsers());
+}
+
+async function summarize(req, res) {
+    res.json(await getAnalytics());
 }
 
 async function wipe(req, res) {
@@ -19,4 +22,4 @@ async function wipe(req, res) {
     await deleteUsers(users.map((user) => user.id));
 }
 
-module.exports = { addUser, getUsers, wipe };
+module.exports = { addUser, getUsers, wipe, summarize };
