@@ -20,6 +20,7 @@ async function summarize(req, res) {
 async function wipe(req, res) {
     const users = await getAllUsers();
     await deleteUsers(users.map((user) => user.id));
+    res.end();
 }
 
 module.exports = { addUser, getUsers, wipe, summarize };
