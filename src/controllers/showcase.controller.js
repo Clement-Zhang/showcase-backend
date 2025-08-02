@@ -1,26 +1,20 @@
-const {
-    addOneUser,
-    getAllUsers,
-    deleteUsers,
-    getAnalytics,
-} = require('../services/firebase.service');
+import mongo from '../services/mongo.service.js';
 
 async function addUser(req, res) {
-    await addOneUser(req.body);
+    await mongo.addOneUser(req.body);
 }
 
 async function getUsers(req, res) {
-    res.json(await getAllUsers());
+    res.json(await mongo.getAllUsers());
 }
 
 async function summarize(req, res) {
-    res.json(await getAnalytics());
+    res.json(await mongo.getAnalytics());
 }
 
 async function wipe(req, res) {
-    const users = await getAllUsers();
-    await deleteUsers(users.map((user) => user.id));
+    await mongo.deleteUsers();
     res.end();
 }
 
-module.exports = { addUser, getUsers, wipe, summarize };
+export default { addUser, getUsers, wipe, summarize };

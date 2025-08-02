@@ -1,5 +1,5 @@
-const collection = require('../configs/firebase.config.js');
-const {
+import collection from '../configs/firebase.config.s';
+import {
     addDoc,
     getDocs,
     deleteDoc,
@@ -7,7 +7,7 @@ const {
     getCountFromServer,
     query,
     where,
-} = require('firebase/firestore');
+} from 'firebase/firestore';
 
 async function addOneUser(user) {
     await addDoc(collection, user);
@@ -39,4 +39,4 @@ async function deleteUsers(userIds) {
     );
 }
 
-module.exports = { addOneUser, getAllUsers, deleteUsers, getAnalytics };
+export default { addOneUser, getAllUsers, deleteUsers, getAnalytics };
