@@ -7,7 +7,9 @@ async function addOneUser(user) {
 async function getAllUsers() {
     const cursor = collection.find();
     let users = [];
-    for await (const user of cursor) {
+    for await (let user of cursor) {
+        user.id = user._id;
+        console.log(user);
         users.push(user);
     }
     return users;
