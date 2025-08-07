@@ -5,21 +5,68 @@ async function addOneUser(user) {
 }
 
 async function getAllUsers() {
-    const cursor = collection.find();
-    let users = [];
-    for await (let user of cursor) {
-        user.id = user._id;
-        console.log(user);
-        users.push(user);
-    }
-    return users;
+    return await collection
+        .aggregate([
+            //prettier-ignore
+            {
+                $addFields: {
+                    age: {
+                        $dateDiff: {
+                            startDate: { $toDate: '$dob' },
+                            endDate: '$$NOW',
+                            unit: 'year',
+                            timezone: '-04',
+                        },
+                    },
+                    id: "$_id",
+                },
+            },
+            {
+                $project: {
+                    _id: 0,
+                },
+            },
+        ])
+        .toArray();
 }
 
 async function getAnalytics() {
-    return {
-        male: await collection.countDocuments({ gender: 'male' }),
-        female: await collection.countDocuments({ gender: 'female' }),
+    const template = {
+        male: 0,
+        female: 0,
+        0: 0,
+        15: 0,
+        25: 0,
+        55: 0,
+        65: 0,
     };
+    (
+        await collection
+            .aggregate([{ $group: { _id: '$gender', count: { $sum: 1 } } }])
+            .toArray()
+    ).forEach((genderCount) => (template[genderCount._id] = genderCount.count));
+    (
+        await collection
+            .aggregate([
+                {
+                    $bucket: {
+                        groupBy: {
+                            $dateDiff: {
+                                startDate: { $toDate: '$dob' },
+                                endDate: '$$NOW',
+                                unit: 'year',
+                                timezone: '-04',
+                            },
+                        },
+                        boundaries: [0, 15, 25, 55, 65, 9999999999],
+                    },
+                },
+            ])
+            .toArray()
+    ).forEach(
+        (ageCount) => (template[ageCount._id] = ageCount.count)
+    );
+    return template;
 }
 
 async function deleteUsers() {
