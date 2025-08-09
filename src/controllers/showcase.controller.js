@@ -2,6 +2,7 @@ import mongo from '../services/mongo.service.js';
 
 async function addUser(req, res) {
     await mongo.addOneUser(req.body);
+    res.end();
 }
 
 async function getUsers(req, res) {
