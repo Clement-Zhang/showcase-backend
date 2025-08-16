@@ -1,11 +1,18 @@
 import { Router } from 'express';
-import showcase from '../controllers/showcase.controller.js';
+import {
+    addUser,
+    getUsers,
+    summarize,
+    editUser,
+    wipe,
+} from '../controllers/showcase.controller.js';
 
 const router = Router();
 
-router.post('/add', showcase.addUser);
-router.get('/get', showcase.getUsers);
-router.post('/wipe', showcase.wipe);
-router.get('/summarize', showcase.summarize);
+router.post('/add', addUser);
+router.get('/get', getUsers);
+router.get('/summarize', summarize);
+router.post('/edit', editUser);
+router.post('/wipe', wipe);
 
 export default router;

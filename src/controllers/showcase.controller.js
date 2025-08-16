@@ -1,21 +1,32 @@
-import mongo from '../services/mongo.service.js';
+import {
+    addOneUser,
+    getAllUsers,
+    updateUser,
+    getAnalytics,
+    deleteUsers,
+} from '../services/mongo.service.js';
 
 async function addUser(req, res) {
-    await mongo.addOneUser(req.body);
+    await addOneUser(req.body);
     res.end();
 }
 
 async function getUsers(req, res) {
-    res.json(await mongo.getAllUsers());
+    res.json(await getAllUsers());
 }
 
-async function summarize(req, res) {
-    res.json(await mongo.getAnalytics());
-}
-
-async function wipe(req, res) {
-    await mongo.deleteUsers();
+async function editUser(req, res) {
+    await updateUser(req.body);
     res.end();
 }
 
-export default { addUser, getUsers, wipe, summarize };
+async function summarize(req, res) {
+    res.json(await getAnalytics());
+}
+
+async function wipe(req, res) {
+    await deleteUsers();
+    res.end();
+}
+
+export { addUser, getUsers, summarize, editUser, wipe };

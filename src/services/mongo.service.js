@@ -1,4 +1,5 @@
 import { collection } from '../configs/mongo.config.js';
+import { ObjectId } from 'mongodb';
 
 async function addOneUser(user) {
     return await collection.insertOne(user);
@@ -63,14 +64,17 @@ async function getAnalytics() {
                 },
             ])
             .toArray()
-    ).forEach(
-        (ageCount) => (template[ageCount._id] = ageCount.count)
-    );
+    ).forEach((ageCount) => (template[ageCount._id] = ageCount.count));
     return template;
+}
+
+async function updateUser(updatedUser) {
+    const { id, ...fields } = updatedUser;
+    await collection.updateOne({ _id: new ObjectId(id) }, { $set: fields });
 }
 
 async function deleteUsers() {
     await collection.deleteMany();
 }
 
-export default { addOneUser, getAllUsers, deleteUsers, getAnalytics };
+export { addOneUser, getAllUsers, getAnalytics, updateUser, deleteUsers };
