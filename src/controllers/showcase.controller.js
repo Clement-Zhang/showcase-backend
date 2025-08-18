@@ -3,6 +3,7 @@ import {
     getAllUsers,
     updateUser,
     getAnalytics,
+    deleteOneUser,
     deleteUsers,
 } from '../services/mongo.service.js';
 
@@ -24,9 +25,14 @@ async function summarize(req, res) {
     res.json(await getAnalytics());
 }
 
+async function deleteUser(req, res) {
+    await deleteOneUser(req.body);
+    res.end();
+}
+
 async function wipe(req, res) {
     await deleteUsers();
     res.end();
 }
 
-export { addUser, getUsers, summarize, editUser, wipe };
+export { addUser, getUsers, summarize, editUser, deleteUser, wipe };

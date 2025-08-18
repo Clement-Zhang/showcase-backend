@@ -73,8 +73,12 @@ async function updateUser(updatedUser) {
     await collection.updateOne({ _id: new ObjectId(id) }, { $set: fields });
 }
 
+async function deleteOneUser(id) {
+    await collection.deleteOne({ _id: new ObjectId(id) });
+}
+
 async function deleteUsers() {
     await collection.deleteMany();
 }
 
-export { addOneUser, getAllUsers, getAnalytics, updateUser, deleteUsers };
+export { addOneUser, getAllUsers, getAnalytics, updateUser, deleteOneUser, deleteUsers };
