@@ -81,4 +81,11 @@ async function deleteUsers() {
     await collection.deleteMany();
 }
 
-export { addOneUser, getAllUsers, getAnalytics, updateUser, deleteOneUser, deleteUsers };
+export {
+    addOneUser,
+    getAllUsers,
+    getAnalytics,
+    updateUser,
+    deleteOneUser,
+    deleteUsers,
+};
