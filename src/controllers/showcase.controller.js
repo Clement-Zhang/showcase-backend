@@ -12,7 +12,7 @@ async function addUser(req, res) {
     res.end();
 }
 
-async function getUsers(req, res) {
+async function getUsers(_, res) {
     res.json(await getAllUsers());
 }
 
@@ -21,7 +21,7 @@ async function editUser(req, res) {
     res.end();
 }
 
-async function summarize(req, res) {
+async function summarize(_, res) {
     res.json(await getAnalytics());
 }
 
@@ -30,7 +30,7 @@ async function deleteUser(req, res) {
     res.end();
 }
 
-async function wipe(req, res) {
+async function wipe(_, res) {
     await deleteUsers();
     res.end();
 }
