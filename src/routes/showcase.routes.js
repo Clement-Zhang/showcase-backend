@@ -8,13 +8,13 @@ import {
     wipe,
 } from '../controllers/showcase.controller.js';
 
-const router = Router();
+const showcase = Router();
 
-router.post('/add', addUser);
-router.get('/get', getUsers);
-router.get('/summarize', summarize);
-router.post('/edit', editUser);
-router.post('/delete', deleteUser);
-router.post('/wipe', wipe);
+showcase.post('/add', addUser);
+showcase.get('/get', getUsers);
+showcase.get('/summarize', summarize);
+showcase.post('/edit', editUser);
+showcase.post('/delete', deleteUser);
+showcase.post('/wipe', wipe);
 
-export default router;
+export default showcase;
