@@ -1,11 +1,11 @@
 import { collection } from '../configs/mongo.config.js';
 import { ObjectId } from 'mongodb';
 
-async function addOneUser(user) {
+export async function addOneUser(user) {
     return await collection.insertOne(user);
 }
 
-async function getAllUsers() {
+export async function getAllUsers() {
     return await collection
         .aggregate([
             //prettier-ignore
@@ -31,7 +31,7 @@ async function getAllUsers() {
         .toArray();
 }
 
-async function getAnalytics() {
+export async function getAnalytics() {
     const template = {
         male: 0,
         female: 0,
@@ -68,24 +68,15 @@ async function getAnalytics() {
     return template;
 }
 
-async function updateUser(updatedUser) {
+export async function updateUser(updatedUser) {
     const { id, ...fields } = updatedUser;
     await collection.updateOne({ _id: new ObjectId(id) }, { $set: fields });
 }
 
-async function deleteOneUser(id) {
+export async function deleteOneUser(id) {
     await collection.deleteOne({ _id: new ObjectId(id) });
 }
 
-async function deleteUsers() {
+export async function deleteUsers() {
     await collection.deleteMany();
 }
-
-export {
-    addOneUser,
-    getAllUsers,
-    getAnalytics,
-    updateUser,
-    deleteOneUser,
-    deleteUsers,
-};
